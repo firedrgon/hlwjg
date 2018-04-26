@@ -27,7 +27,7 @@ public class UseFuture implements Callable<String> {
         //submit和execute的区别：submit可以传入实现Callable接口的实例对象，submit有返回值
         Future<?> future = pool.submit(futureTask);
 
-        //o==null,表示执行完毕
+        //o==null,表示执行完毕,阻塞直到返回结果
         Object o = future.get();
         System.out.println(o);
         System.out.println("请求完毕");
