@@ -2,6 +2,7 @@ package com.netty.hello;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -20,7 +21,9 @@ public class ServerHandler extends ChannelHandlerAdapter {
         System.out.println("Server:" + body);
 
         String response = "进行返回给客户端的响应:" + body;
-        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()));
+        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()))
+                //服务端发送完后，客户端接收完成后关闭客户端的连接
+                .addListener(ChannelFutureListener.CLOSE);
     }
 
     @Override

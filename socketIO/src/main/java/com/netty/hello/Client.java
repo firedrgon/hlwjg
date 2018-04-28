@@ -26,13 +26,19 @@ public class Client {
                 }
         });
 
-        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8765).sync();
+        ChannelFuture channelFuture1 = bootstrap.connect("127.0.0.1", 8765).sync();
+        ChannelFuture channelFuture2 = bootstrap.connect("127.0.0.1", 8764).sync();
         //发送消息
         Thread.sleep(1000);
         //发送消息
-        channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer("8888".getBytes()));
+        channelFuture1.channel().write(Unpooled.copiedBuffer("hello netty".getBytes()));
+        channelFuture2.channel().write(Unpooled.copiedBuffer("8888".getBytes()));
+        //flush的时候才发送信息到服务端
+        channelFuture2.channel().flush();
+        channelFuture1.channel().flush();
 
-        channelFuture.channel().closeFuture().sync();
+        channelFuture2.channel().closeFuture().sync();
+        channelFuture1.channel().closeFuture().sync();
 
         loopGroup.shutdownGracefully();
     }

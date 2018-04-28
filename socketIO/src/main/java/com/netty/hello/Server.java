@@ -34,11 +34,13 @@ public class Server {
                     }
                 });
 
-        //端口绑定
-        ChannelFuture channelFuture = bootstrap.bind(8765).sync();
+        //端口绑定，监听两个端口
+        ChannelFuture channelFuture1 = bootstrap.bind(8765).sync();
+        ChannelFuture channelFuture2 = bootstrap.bind(8764).sync();
 
         //等待关闭
-        channelFuture.channel().closeFuture().sync();
+        channelFuture1.channel().closeFuture().sync();
+        channelFuture2.channel().closeFuture().sync();
 
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
