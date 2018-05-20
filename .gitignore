@@ -13,3 +13,4 @@ rebel.xml
 */.externalToolBuilders/*
 /.DS_Store
 /.metadata/
+/.recommenders/
